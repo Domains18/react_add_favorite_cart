@@ -1,8 +1,6 @@
 const Student = require('../schema/studentSchema'); 
 const expressAsyncHandler = require('express-async-handler');
 
-
-
 const addStudent = expressAsyncHandler(async (req, res) => {
     const { firstName, lastName, address, admissionNumber, prevSchool, grade, age, allergies, medicalConditions, parentName, parentEmail, parentPhone, career, parentTeacher, subjects, year } = req.body;
     
@@ -11,7 +9,6 @@ const addStudent = expressAsyncHandler(async (req, res) => {
         throw new Error('Please fill in all fields');
     }
     const checkStudent = await Student.findOne({ admissionNumber });
-
     switch (checkStudent) {
         case null:
             const student = await Student.create({
@@ -62,7 +59,6 @@ const getStudents = expressAsyncHandler(async (req, res) => {
     const students = await Student.find({});
     res.json(students);
 });
-
 const getStudentByAdmissionNumber = expressAsyncHandler(async (req, res) => {
     const student = await Student.findOne({ admissionNumber: req.params.admissionNumber });
     if (student) {
@@ -72,10 +68,6 @@ const getStudentByAdmissionNumber = expressAsyncHandler(async (req, res) => {
         throw new Error('Student not found');
     }
 });
-
-;
-
-
 const updateStudent = expressAsyncHandler(async (req, res) => {
     const { firstName, lastName, address, admissionNumber, prevSchool, grade, age, allergies, medicalConditions, parentName, parentEmail, parentPhone, career, parentTeacher, subjects, year } = req.body;
     const student = await Student.findOne({ admissionNumber: req.params.admissionNumber });
@@ -121,8 +113,6 @@ const updateStudent = expressAsyncHandler(async (req, res) => {
         throw new Error('Student not found');
     }
 });
-
-
 module.exports = {
     addStudent,
     getStudents,
