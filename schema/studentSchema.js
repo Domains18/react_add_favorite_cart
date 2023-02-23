@@ -1,6 +1,6 @@
-const schema = require('mongoose').Schema;
+const Schema = require('mongoose').Schema;
 
-const studentSchema = new schema({
+const studentSchema = new Schema({
     firstName: {
         type: String,
         required: true
@@ -54,6 +54,10 @@ const studentSchema = new schema({
         required: true,
         ref: 'Teacher'
     },
+    subjects: [{
+        type: Array,
+        ref: 'Subject'
+    }],
 });
 
 const Student = module.exports = require('mongoose').model('Student', studentSchema);
