@@ -17,10 +17,6 @@ const teacherSchema = new schema({
         type: String,
         required: true
     },
-    password: {
-        type: String,
-        required: true
-    },
     students: [{
         type: schema.Types.ObjectId,
         ref: 'Student'
