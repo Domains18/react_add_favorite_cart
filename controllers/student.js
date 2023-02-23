@@ -53,8 +53,6 @@ const addStudent = expressAsyncHandler(async (req, res) => {
             break;
     }
 });
-
-
 const getStudents = expressAsyncHandler(async (req, res) => {
     const students = await Student.find({});
     res.json(students);
