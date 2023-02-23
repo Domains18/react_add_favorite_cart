@@ -58,6 +58,10 @@ const studentSchema = new Schema({
         type: Array,
         ref: 'Subject'
     }],
+    year: {
+        type: String,
+        required: true
+    }
 });
 
 const Student = module.exports = require('mongoose').model('Student', studentSchema);
