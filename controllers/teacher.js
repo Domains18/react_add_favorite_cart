@@ -24,7 +24,7 @@ const addTeacher = expressAsyncHandler(async (req, res) => {
             });
             if (teacher) {
                 res.status(201).json({
-                    _id: teacher._id,
+                    _id: teacher.id,
                     firstName: teacher.firstName,
                     lastName: teacher.lastName,
                     email: teacher.email,
@@ -38,3 +38,22 @@ const addTeacher = expressAsyncHandler(async (req, res) => {
             break;
     }
 });
+
+const getTeachers = expressAsyncHandler(async (req, res) => {
+    const teachers = await Teacher.find({});
+    res.json(teachers);
+});
+
+const getTeacherById = expressAsyncHandler(async (req, res) => {
+    const teacher = await Teacher.findById(req.params.id);
+    if (teacher) {
+        res.json(teacher);
+    } else {
+        res.status(404);
+        throw new Error('Teacher not found');
+    }
+});
+
+
+
+module.exports = { addTeacher, getTeachers, getTeacherById };
