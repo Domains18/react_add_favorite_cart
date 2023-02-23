@@ -9,6 +9,11 @@ const studentSchema = new Schema({
         type: String,
         required: true
     },
+    admissionNumber: {
+        type: String,
+        required: true,
+        unique: true
+    },
     address: {
         type: String,
         required: true
@@ -62,7 +67,7 @@ const studentSchema = new Schema({
         type: String,
         required: true
     }
-});
+}, { collection: 'students' });
 
 const Student = module.exports = require('mongoose').model('Student', studentSchema);
 module.exports = Student;
