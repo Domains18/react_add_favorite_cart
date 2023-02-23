@@ -39,7 +39,7 @@ const teacherSchema = new schema({
         required: true,
         default: 'Teacher'
     }
-});
+}, {collection: 'teachers'});
 
 const Teacher = module.exports = require('mongoose').model('Teacher', teacherSchema);
 module.exports = Teacher;
