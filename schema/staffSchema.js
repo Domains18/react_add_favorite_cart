@@ -27,7 +27,7 @@ const staffSchema = new Schema({
         required: true,
         ref: 'Department'
     },
-});
+},{collection: 'staffs'});
 
 const Staff = mongoose.model('Staff', staffSchema);
 module.exports = Staff;
