@@ -27,5 +27,7 @@ const staffSchema = new Schema({
         required: true,
         ref: 'Department'
     },
-
 });
+
+const Staff = mongoose.model('Staff', staffSchema);
+module.exports = Staff;
