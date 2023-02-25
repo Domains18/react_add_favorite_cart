@@ -1,6 +1,10 @@
 const Teacher = require('../schema/teacherSchema');
 const adminSchema = require('../schema/admin/adminSchema');
 const expressAsyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+
 
 const addTeacherAdmin = expressAsyncHandler(async (req, res) => {
     const { name, email, password } = req.body;
@@ -16,17 +20,24 @@ const addTeacherAdmin = expressAsyncHandler(async (req, res) => {
             res.status(400);
             throw new Error('Teacher not found');
         case true:
+
+            const salt = await bcrypt.genSalt(10);
+            const hashedPassword = await bcrypt.hash(password, salt);
+
+
             const admin = await adminSchema.create({
                 name,
                 email,
-                password
+                password: hashedPassword
             });
             if (admin) {
                 res.status(201).json({
                     _id: admin._id,
                     name: admin.name,
                     email: admin.email,
-                    password: admin.password
+                    token: jwt.sign({ _id: admin._id }, process.env.JWT_SECRET, {
+                        expiresIn: '30d'
+                    })
                 });
             }
             else {
@@ -53,4 +64,24 @@ const removeTeacherAdmin = expressAsyncHandler(async (req, res) => {
     }
 });
 
-module.exports = { addTeacherAdmin, removeTeacherAdmin };
+const loginAdmin = expressAsyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+    if (!email, !password) {
+        res.status(400);
+        throw new Error('Please fill all the fields');
+    }
+    const teacherAdmin = Teacher.findOne({ email });
+    if (teacherAdmin && (await bcrypt.compare(password, teacherAdmin.password))) {
+        res.json({
+            _id: teacherAdmin._id,
+            name: teacherAdmin.name,
+            email: teacherAdmin.email,
+        });
+    } else {
+        res.status(401);
+        throw new Error('Invalid email or password');
+    }
+
+});
+
+module.exports = { addTeacherAdmin, removeTeacherAdmin, loginAdmin };
