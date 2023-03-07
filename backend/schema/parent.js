@@ -13,7 +13,13 @@ const ParentSchema = new Schema({
     id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
-    }
+    },
+    students: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Student'
+        }
+    ]
 });
 
 const Parent = mongoose.model('Parent', ParentSchema);
