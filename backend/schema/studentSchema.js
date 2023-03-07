@@ -11,7 +11,8 @@ const studentSchema = new Schema({
         required: true
     },
     id: {
-        type: Object
+        type: Object,
+        required: true
     }
 });
 
