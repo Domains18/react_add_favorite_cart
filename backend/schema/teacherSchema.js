@@ -7,6 +7,10 @@ const Schema = mongoose.Schema;
 
 
 const teacherSchema = new Schema({
+    id: {
+        type: Object,
+        required: true
+    },
     Fname: {
         type: String,
         required: true
@@ -15,13 +19,37 @@ const teacherSchema = new Schema({
         type: String,
         required: true
     },
-    id: {
-        type: Object,
-        required: true
-    },
     email: {
         type: String,
         required: true,
         unique: true
-    }
+    },
+    gender: {
+        type: String,
+        required: true
+    },
+    dob: {
+        type: Date,
+        required: true
+    },
+    phone: {
+        type: String,
+        required: true
+    },
+    isActive: {
+        type: Boolean,
+        required: true
+    },
+    joinDate: {
+        type: Date,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    workingDays: {
+        type: Array,
+        required: true
+    },
 });

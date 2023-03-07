@@ -14,6 +14,18 @@ const ParentSchema = new Schema({
         type: Object,
         required: true
     },
+    phone: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        required: true
+    },
+    updatedAt: {
+        type: Date,
+        required: true
+    },
     students: [
         {
             type: Object,

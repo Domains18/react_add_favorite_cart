@@ -11,7 +11,7 @@ const classSchema = new Schema({
         type: Object,
         required: true
     },
-    name: {
+    className: {
         type: String,
         required: true
     },
@@ -19,8 +19,8 @@ const classSchema = new Schema({
         type: String,
         required: true
     },
+    
     description: {
         type: String,
-    },
-
+    }
 });
