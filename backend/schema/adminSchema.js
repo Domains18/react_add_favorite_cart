@@ -1,7 +1,10 @@
+
+
+//Path: backend/schema/adminSchema.js
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-const ParentSchema = new Schema({
+const adminSchema = new Schema({
     Fname: {
         type: String,
         required: true
@@ -14,13 +17,7 @@ const ParentSchema = new Schema({
         type: Object,
         required: true
     },
-    students: [
-        {
-            type: Object,
-            ref: 'Student'
-        }
-    ]
 });
 
-const Parent = mongoose.model('Parent', ParentSchema);
-module.exports = Parent;
+const Admin = mongoose.model('Admin', adminSchema);
+module.exports = Admin;
