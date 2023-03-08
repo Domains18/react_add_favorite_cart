@@ -66,8 +66,12 @@ const registerStudent = asyncHandler(async (req, res) => {
 //@route  POST /api/registration/parent
 //@access Private
 const registerParent = asyncHandler(async (req, res) => {
+    const { id, Fname, Lname, phone, createdAt, updatedAt, students } = req.body;
+    if (!id, !Fname, !Lname, !phone, !createdAt, !updatedAt, !students) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
     const validateParent = await Parent.findById({ id });
-
     switch (validateParent) {
         case true:
             res.status(400);
@@ -107,6 +111,11 @@ const registerParent = asyncHandler(async (req, res) => {
 
 const addClass = asyncHandler(async (req, res) => {
     const { id, name, classId, teacherId, description } = req.body
+    if (!id, !name, !classId, !teacherId, !description) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
+
     const validateClass = await Class.findById({ id });
     if (validateClass) {
         res.status(400)
@@ -134,7 +143,10 @@ const addClass = asyncHandler(async (req, res) => {
 
 const registerTeacher = asyncHandler(async (req, res) => {
     const { id, Fname, Lname, email, gender, phone, isActive, joinDate, createdAt, workingDays } = req.body;
-
+    if (!id, !Fname, !Lname, !email, !gender, !phone, !isActive, !joinDate, !createdAt, !workingDays) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
     const checkTeacher = await Teacher.findById({ id });
     if (checkTeacher) {
         res.status(400);
