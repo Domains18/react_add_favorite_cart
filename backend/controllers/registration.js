@@ -107,4 +107,33 @@ const registerParent = asyncHandler(async (req, res) => {
     });
 });
 
-//@desc   Register a new 
+//@desc   add a new class
+//@route  POST /api/registration/class
+//@access Public
+
+const addClass = asyncHandler(async (req, res) => {
+    const { id, name, classId, teacherId, description } = req.body
+    const validateClass = await Class.findById({ id });
+    if (validateClass) {
+        res.status(400)
+        throw new Error("Bad request, Class already exists");
+    }
+    const clas = await Class.create({
+        id,
+        name,
+        classId,
+        teacherId,
+        description
+    })
+    if (clas) {
+        res.json({
+            _id: clas.id,
+            name: clas.name,
+            teacherId: clas.teacherId,
+            description: clas.description
+        });
+    } else {
+        res.status(400);
+        throw new Error("Invalid or Bad Request");
+    }
+});
