@@ -16,8 +16,8 @@ const Subject = require('../models/subjectSchema');
 // @route   POST /api/registration/student
 // @access  Private
 const registerStudent = asyncHandler(async (req, res) => {
-    const { id, Fname, Lname, gender, dob, classId, isActive, joinDate, createdAt, updatedAt, createdBy } = req.body;
-    if (!id || !Fname || !Lname || !gender || !dob || !classId || !isActive || !joinDate || !createdAt || !updatedAt || !createdBy) {
+    const { Fname, Lname, gender, dob, classId, isActive, joinDate, createdAt, updatedAt, createdBy } = req.body;
+    if (!Fname || !Lname || !gender || !dob || !classId || !isActive || !joinDate || !createdAt || !updatedAt || !createdBy) {
         res.status(400);
         throw new Error('All fields are required');
     }
@@ -28,7 +28,6 @@ const registerStudent = asyncHandler(async (req, res) => {
         throw new Error('Student already exists');
     }
     const student = await Student.create({
-        id,
         Fname,
         Lname,
         gender,
@@ -66,8 +65,8 @@ const registerStudent = asyncHandler(async (req, res) => {
 //@route  POST /api/registration/parent
 //@access Private
 const registerParent = asyncHandler(async (req, res) => {
-    const { id, Fname, Lname, phone, createdAt, updatedAt, students } = req.body;
-    if (!id, !Fname, !Lname, !phone, !createdAt, !updatedAt, !students) {
+    const { Fname, Lname, phone, createdAt, updatedAt, students } = req.body;
+    if (!Fname, !Lname, !phone, !createdAt, !updatedAt, !students) {
         res.status(400);
         throw new Error("All fields are required");
     }
@@ -79,7 +78,6 @@ const registerParent = asyncHandler(async (req, res) => {
             break;
         case false:
             const parent = await Parent.create({
-                id,
                 Fname,
                 Lname,
                 phone,
@@ -110,8 +108,8 @@ const registerParent = asyncHandler(async (req, res) => {
 //@access Private
 
 const addClass = asyncHandler(async (req, res) => {
-    const { id, name, classId, teacherId, description } = req.body
-    if (!id, !name, !classId, !teacherId, !description) {
+    const { classCode, name, classId, teacherId, description } = req.body
+    if (!classCode, !name, !classId, !teacherId, !description) {
         res.status(400);
         throw new Error("All fields are required");
     }
@@ -122,7 +120,7 @@ const addClass = asyncHandler(async (req, res) => {
         throw new Error("Bad request, Class already exists");
     }
     const clas = await Class.create({
-        id,
+        classCode,
         name,
         classId,
         teacherId,
@@ -142,8 +140,8 @@ const addClass = asyncHandler(async (req, res) => {
 });
 
 const registerTeacher = asyncHandler(async (req, res) => {
-    const { id, Fname, Lname, email, gender, phone, isActive, joinDate, createdAt, workingDays } = req.body;
-    if (!id, !Fname, !Lname, !email, !gender, !phone, !isActive, !joinDate, !createdAt, !workingDays) {
+    const { Fname, Lname, email, gender, phone, isActive, joinDate, createdAt, workingDays } = req.body;
+    if (!Fname, !Lname, !email, !gender, !phone, !isActive, !joinDate, !createdAt, !workingDays) {
         res.status(400);
         throw new Error("All fields are required");
     }
@@ -153,7 +151,6 @@ const registerTeacher = asyncHandler(async (req, res) => {
         throw new Error("Teacher already exists");
     }
     const teacher = await Teacher.create({
-        id,
         Fname,
         Lname,
         email,
@@ -188,14 +185,18 @@ const registerTeacher = asyncHandler(async (req, res) => {
 //@access Private
 
 const addSubject = asyncHandler(async (req, res) => {
-    const { id, name, classId, teacherId, description } = req.body;
+    const { subjectCode, name, classCode, teacherId, description } = req.body;
+    if (!subjectCode, !name, !classCode, !teacherId, !description) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
     const checkSubject = await Subject.findById({ id });
     if (checkSubject) {
         res.status(400);
         throw new Error("Subject already exists");
     }
     await Subject.create({
-        id,
+        subjectCode,
         name,
         classId,
         teacherId,
@@ -219,10 +220,15 @@ const addAdmin = asyncHandler(async (req, res) => {
         res.status(400);
         throw new Error("Admin already exists");
     }
+    //hash password
+    
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const admin = await Admin.create({
         names,
         email,
-        password,
+        password: hashedPassword,
         role
     });
     if (admin) {
@@ -230,7 +236,8 @@ const addAdmin = asyncHandler(async (req, res) => {
             _id: admin.id,
             names: admin.names,
             email: admin.email,
-            role: admin.role
+            role: admin.role,
+            token: generateToken(admin._id)
         });
     }
     else {
@@ -239,6 +246,12 @@ const addAdmin = asyncHandler(async (req, res) => {
     }
 });
 
+
+const generateToken = (id) => {
+    return jwt.sign({ id }, process.env.JWT_SECRET, {
+        expiresIn: '30d'
+    })
+}
 
 module.exports = {
     registerStudent,
