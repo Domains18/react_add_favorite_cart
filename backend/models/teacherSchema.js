@@ -28,10 +28,6 @@ const teacherSchema = new Schema({
         type: String,
         required: true
     },
-    dob: {
-        type: Date,
-        required: true
-    },
     phone: {
         type: String,
         required: true

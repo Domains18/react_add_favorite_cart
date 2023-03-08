@@ -11,8 +11,7 @@ const Subject = require('../models/subjectSchema');
 
 // @desc    Register a new student
 // @route   POST /api/registration/student
-// @access  Public
-//**@Domains18 */
+// @access  Private
 const registerStudent = asyncHandler(async (req, res) => {
     const { id, Fname, Lname, gender, dob, classId, isActive, joinDate, createdAt, updatedAt, createdBy } = req.body;
     if (!id || !Fname || !Lname || !gender || !dob || !classId || !isActive || !joinDate || !createdAt || !updatedAt || !createdBy) {
@@ -62,8 +61,7 @@ const registerStudent = asyncHandler(async (req, res) => {
 
 //@desc   Register a new parent
 //@route  POST /api/registration/parent
-//@access Public
-
+//@access Private
 const registerParent = asyncHandler(async (req, res) => {
     const validateParent = await Parent.findById({ id });
 
@@ -102,7 +100,7 @@ const registerParent = asyncHandler(async (req, res) => {
 
 //@desc   add a new class
 //@route  POST /api/registration/class
-//@access Public
+//@access Private
 
 const addClass = asyncHandler(async (req, res) => {
     const { id, name, classId, teacherId, description } = req.body
@@ -124,6 +122,45 @@ const addClass = asyncHandler(async (req, res) => {
             name: clas.name,
             teacherId: clas.teacherId,
             description: clas.description
+        });
+    } else {
+        res.status(400);
+        throw new Error("Invalid or Bad Request");
+    }
+});
+
+const registerTeacher = asyncHandler(async (req, res) => {
+    const { id, Fname, Lname, email, gender, phone, isActive, joinDate, createdAt, workingDays } = req.body;
+
+    const checkTeacher = await Teacher.findById({ id });
+    if (checkTeacher) {
+        res.status(400);
+        throw new Error("Teacher already exists");
+    }
+    const teacher = await Teacher.create({
+        id,
+        Fname,
+        Lname,
+        email,
+        gender,
+        phone,
+        isActive,
+        joinDate,
+        createdAt,
+        workingDays
+    });
+    if (teacher) {
+        res.json({
+            _id: teacher.id,
+            Fname: teacher.Fname,
+            Lname: teacher.Lname,
+            email: teacher.email,
+            gender: teacher.gender,
+            phone: teacher.phone,
+            isActive: teacher.isActive,
+            joinDate: teacher.joinDate,
+            createdAt: teacher.createdAt,
+            workingDays: teacher.workingDays
         });
     } else {
         res.status(400);
