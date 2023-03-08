@@ -14,10 +14,6 @@ const ParentSchema = new Schema({
         type: String,
         required: true
     },
-    id: {
-        type: Object,
-        required: true
-    },
     phone: {
         type: String,
         required: true

@@ -3,10 +3,6 @@ const Schema = mongoose.Schema;
 
 //Path: backend/models/studentSchema.js
 const studentSchema = new Schema({
-    id: {
-        type: Object,
-        required: true
-    },
     Fname: {
         type: String,
         required: true

@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 
 const classSchema = new Schema({
-    id: {
+    classCode: {
         type: Object,
         required: true
     },

@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 
 const subjectSchema = new Schema({
-    id: {
+    subjectCode: {
         type: String,
         required: true
     },

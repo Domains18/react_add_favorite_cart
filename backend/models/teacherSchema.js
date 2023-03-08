@@ -7,10 +7,6 @@ const Schema = mongoose.Schema;
 
 
 const teacherSchema = new Schema({
-    id: {
-        type: Object,
-        required: true
-    },
     Fname: {
         type: String,
         required: true
