@@ -5,17 +5,25 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const adminSchema = new Schema({
-    Fname: {
+    names: {
         type: String,
         required: true
     },
-    Lname: {
+    email: {
         type: String,
         required: true
     },
-    id: {
-        type: Object,
+    password: {
+        type: String,
         required: true
+    },
+    role: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     },
 });
 

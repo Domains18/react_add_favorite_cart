@@ -1,6 +1,9 @@
 
 // Path: backend/controllers/registration.js
 const asyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 
 const Student = require('../models/studentSchema');
 const Parent = require('../models/parentSchema');
@@ -167,3 +170,69 @@ const registerTeacher = asyncHandler(async (req, res) => {
         throw new Error("Invalid or Bad Request");
     }
 });
+
+//@desc   add a new subject
+//@route  POST /api/registration/subject
+//@access Private
+
+const addSubject = asyncHandler(async (req, res) => {
+    const { id, name, classId, teacherId, description } = req.body;
+    const checkSubject = await Subject.findById({ id });
+    if (checkSubject) {
+        res.status(400);
+        throw new Error("Subject already exists");
+    }
+    await Subject.create({
+        id,
+        name,
+        classId,
+        teacherId,
+        description
+    });
+});
+
+
+//@desc   add a new admin
+//@route  POST /api/registration/admin
+//@access Private
+
+const addAdmin = asyncHandler(async (req, res) => {
+    const { names, email, password, role } = req.body;
+    if (!names || !email || !password || !role) {
+        res.status(400);
+        throw new Error("All fields are required");
+    }
+    const checkAdmin = await Admin.findOne({ email });
+    if (checkAdmin) {
+        res.status(400);
+        throw new Error("Admin already exists");
+    }
+    const admin = await Admin.create({
+        names,
+        email,
+        password,
+        role
+    });
+    if (admin) {
+        res.json({
+            _id: admin.id,
+            names: admin.names,
+            email: admin.email,
+            role: admin.role
+        });
+    }
+    else {
+        res.status(400);
+        throw new Error("Invalid or Bad Request");
+    }
+});
+
+
+module.exports = {
+    registerStudent,
+    registerParent,
+    addClass,
+    registerTeacher,
+    addSubject,
+    addAdmin
+}
