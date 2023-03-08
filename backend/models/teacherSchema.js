@@ -53,3 +53,7 @@ const teacherSchema = new Schema({
         required: true
     },
 });
+
+
+const Teacher = mongoose.model('Teacher', teacherSchema);
+module.exports = Teacher;

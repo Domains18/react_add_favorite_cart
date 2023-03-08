@@ -1,13 +1,13 @@
 
 // Path: backend/controllers/registration.js
 const asyncHandler = require('express-async-handler');
+
 const Student = require('../models/studentSchema');
 const Parent = require('../models/parentSchema');
-const Admin = require('../models/adminSchema');
 const Class = require('../models/classSchema');
-const Subject = require('../models/subjectSchema');
 const Teacher = require('../models/teacherSchema');
-
+const Admin = require('../models/adminSchema');
+const Subject = require('../models/subjectSchema');
 
 // @desc    Register a new student
 // @route   POST /api/registration/student
@@ -106,3 +106,5 @@ const registerParent = asyncHandler(async (req, res) => {
         }
     });
 });
+
+//@desc   Register a new 

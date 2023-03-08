@@ -1,3 +1,7 @@
+
+
+//path: backend/models/parentSchema.js
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

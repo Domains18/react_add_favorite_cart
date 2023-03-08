@@ -1,7 +1,7 @@
 
 
 
-//Path: backend/schema/subjectSchema.js
+//Path: backend/models/subjectSchema.js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -30,4 +30,4 @@ const subjectSchema = new Schema({
 });
 
 const Subject = mongoose.model('Subject', subjectSchema);
-module.export = Subject;
+module.exports = Subject;

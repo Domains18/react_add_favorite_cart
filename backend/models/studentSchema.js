@@ -1,4 +1,5 @@
-const Schema = require('express').Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 //Path: backend/models/studentSchema.js
 const studentSchema = new Schema({
