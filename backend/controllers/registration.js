@@ -64,47 +64,40 @@ const registerStudent = asyncHandler(async (req, res) => {
 //@route  POST /api/registration/parent
 //@access Public
 
-
 const registerParent = asyncHandler(async (req, res) => {
-    /**@extends Parent */
-    const { Fname, Lname, id, phone, createdAt, updatedAt, students } = req.body;
+    const validateParent = await Parent.findById({ id });
 
-
-    const registerParent = asyncHandler(async (req, res) => {
-        const validateParent = await Parent.findById({ id });
-
-        switch (validateParent) {
-            case true:
-                res.status(400);
-                throw new error(`Parent of Id: ${id} already exists`);
-                break;
-            case false:
-                const parent = await Parent.create({
-                    id,
-                    Fname,
-                    Lname,
-                    phone,
-                    createdAt,
-                    updatedAt,
-                    students,
+    switch (validateParent) {
+        case true:
+            res.status(400);
+            throw new error(`Parent of Id: ${id} already exists`);
+            break;
+        case false:
+            const parent = await Parent.create({
+                id,
+                Fname,
+                Lname,
+                phone,
+                createdAt,
+                updatedAt,
+                students,
+            });
+            break;
+            if (parent) {
+                res.status(201).json({
+                    _id: parent.id,
+                    Fname: parent.Fname,
+                    Lname: parent.Lname,
+                    phone: parent.phone,
+                    createdAt: parent.createdAt,
+                    updatedAt: parent.updatedAt,
+                    students: parent.students
                 });
-                break;
-                if (parent) {
-                    res.status(201).json({
-                        _id: parent.id,
-                        Fname: parent.Fname,
-                        Lname: parent.Lname,
-                        phone: parent.phone,
-                        createdAt: parent.createdAt,
-                        updatedAt: parent.updatedAt,
-                        students: parent.students
-                    });
-                } else {
-                    res.status(400);
-                    throw new Error("Bad or Invalid Request");
-                }
-        }
-    });
+            } else {
+                res.status(400);
+                throw new Error("Bad or Invalid Request");
+            }
+    }
 });
 
 //@desc   add a new class
