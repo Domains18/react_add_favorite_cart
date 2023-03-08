@@ -20,4 +20,42 @@ const registerStudent = asyncHandler(async (req, res) => {
         throw new Error('All fields are required');
     }
     
+    const validateStudent = await Student.findOne({ id });
+    if(validateStudent) {
+        res.status(400);
+        throw new Error('Student already exists');
+    }
+    const student = await Student.create({
+        id,
+        Fname,
+        Lname,
+        gender,
+        dob,
+        classId,
+        isActive,
+        joinDate,
+        createdAt,
+        updatedAt,
+        createdBy,
+    });
+    if (student) {
+        res.status(201).json({
+            _id: student.id,
+            firstName: student.Fname,
+            lastName: student.Lname,
+            gender: student.gender,
+            dob: student.dob,
+            classId: student.classId,
+            isActive: student.isActive,
+            joinDate: student.joinDate,
+            createdAt: student.createdAt,
+            updatedAt: student.updatedAt,
+            createdBy: student.createdBy,
+        });
+
+    } else {
+        res.status(400);
+        throw new Error('invalid user data')
+    }
 });
+// 
