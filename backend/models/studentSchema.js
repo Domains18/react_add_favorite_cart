@@ -11,6 +11,10 @@ const studentSchema = new Schema({
         type: String,
         required: true
     },
+    admNo: {
+        type: Number,
+        required: true,
+    },
     gender: {
         type: String,
         required: true

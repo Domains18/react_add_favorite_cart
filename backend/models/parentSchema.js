@@ -16,7 +16,8 @@ const ParentSchema = new Schema({
     },
     phone: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
     createdAt: {
         type: Date,

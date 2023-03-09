@@ -17,8 +17,8 @@ const Community = require('../models/communitySchema');
 // @route   POST /api/registration/student
 // @access  Private
 const registerStudent = asyncHandler(async (req, res) => {
-    const { Fname, Lname, gender, dob, classId, isActive, joinDate, createdAt, updatedAt, createdBy } = req.body;
-    if (!Fname || !Lname || !gender || !dob || !classId || !isActive || !joinDate || !createdAt || !updatedAt || !createdBy) {
+    const { Fname, Lname, admNo, gender, dob, classId, isActive, joinDate, createdAt, updatedAt, createdBy } = req.body;
+    if (!Fname || !Lname || !gender || !dob || !classId || !isActive || !joinDate || !createdAt || !updatedAt || !createdBy || !admNo) {
         res.status(400);
         throw new Error('All fields are required');
     }
@@ -33,6 +33,7 @@ const registerStudent = asyncHandler(async (req, res) => {
         Lname,
         gender,
         dob,
+        admNo,
         classId,
         isActive,
         joinDate,
@@ -46,6 +47,7 @@ const registerStudent = asyncHandler(async (req, res) => {
             firstName: student.Fname,
             lastName: student.Lname,
             gender: student.gender,
+            admNo: student.admNo,
             dob: student.dob,
             classId: student.classId,
             isActive: student.isActive,
