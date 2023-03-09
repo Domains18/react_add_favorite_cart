@@ -11,6 +11,7 @@ const Class = require('../models/classSchema');
 const Teacher = require('../models/teacherSchema');
 const Admin = require('../models/adminSchema');
 const Subject = require('../models/subjectSchema');
+const Community = require('../models/communitySchema');
 
 // @desc    Register a new student
 // @route   POST /api/registration/student
@@ -245,12 +246,48 @@ const addAdmin = asyncHandler(async (req, res) => {
         throw new Error("Invalid or Bad Request");
     }
 });
-
+//**@Community * /
+//@desc   Register a new thirdparty user
+//@route  POST /api/registration/community
+//@access Public
+const registerCommunity = asyncHandler(async (req, res) => {
+    const { names, allumni, email, phone, otherAffiliations } = req.body;
+    if (!names || !allumni || !email || !phone || !otherAffiliations) {
+        res.status(400);
+        throw new Error('All fields are required');
+    }
+    
+    const checkUser = await Community.findOne({ email });
+    if (checkUser) {
+        res.status(400);
+        throw new Error('User already exists');
+    }
+    const community = await Community.create({
+        names,
+        allumni,
+        email,
+        phone,
+        otherAffiliations
+    });
+    if (community) {
+        res.status(200);
+        res.json({
+            names: community.names,
+            allumni: community.allumni,
+            email: community.email,
+            phone: community.phone,
+            otherAffiliations: community.otherAffiliations
+        });
+    } else {
+        res.status(400);
+        throw new Error('Somethig went wrong')
+    }
+});
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
-    })
+    });
 }
 
 module.exports = {
@@ -259,5 +296,6 @@ module.exports = {
     addClass,
     registerTeacher,
     addSubject,
-    addAdmin
+    addAdmin,
+    registerCommunity
 }
