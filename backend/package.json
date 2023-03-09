@@ -1,7 +1,7 @@
 {
   "name": "d1gital-highschool",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/Domains18/d1gital-highschool.git",
   "author": "Domains18 <gibsonsgibson88@gmail.com>",
   "license": "MIT",
