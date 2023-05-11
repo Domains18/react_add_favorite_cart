@@ -1,0 +1,39 @@
+*{
+    background-color: azure;
+}
+.container{
+    display: flex;
+    justify-content: center;
+}
+.todo-container{
+    border:  2px solid black;
+    height:  500px;
+    width:  800px;
+    position: relative;
+    top:  40px;
+
+
+    h1{
+        font-size:  18px;
+        padding:  20px;
+        text-decoration: underline;
+    }
+    .todo-box{
+        border:  1px solid black;
+        height:  fit-content;
+        margin:  20px;
+        
+        .item-cont{
+            display: flex;
+            justify-content:  space-between;
+            margin:  1em;
+
+            .delete{
+                color: red;
+                cursor: pointer;
+                font-size:  18px;
+            }
+        }
+        
+    }
+}
