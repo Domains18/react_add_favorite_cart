@@ -2,20 +2,20 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 import Favorite from './Favorites'
-
+import '../index.css'
 const Navbar = () => {
     return (
         <nav className="navbar">
             <div className="nav-center">
                 <ul className="nav-links">
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/" className='links'>Home</Link>
                     </li>
                     <li>
-                        <Link to="/favorites">Favorites</Link>
+                        <Link to="/favorites" className='links'>Favorites</Link>
                     </li>
                     <li>
-                        <Link to="/cart">Cart</Link>
+                        <Link to="/cart" className='links'>Cart</Link>
                     </li>
                 </ul>
             </div>
