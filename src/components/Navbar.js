@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import { AiOutlineShoppingCart } from 'react-icons/ai'
 import Favorite from './Favorites'
 import '../index.css'
 const Navbar = () => {
@@ -18,6 +19,10 @@ const Navbar = () => {
                         <Link to="/cart" className='links'>Cart</Link>
                     </li>
                 </ul>
+                <div className="cart-btn">
+                    <AiOutlineShoppingCart className='cart-icon' />
+                    <span className="cart-items">0</span>
+                </div>
             </div>
         </nav>
     )
