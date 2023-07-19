@@ -1,5 +1,5 @@
-import React from 'react'
-import image from '../assets/item.jpg'
+import React, { useState, useEffect } from 'react';
+import image from '../assets/item.jpg';
 
 const products = [
   {
@@ -10,18 +10,30 @@ const products = [
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel od',
   },
   {
-    id: 1,
-    name: 'Product 1',
+    id: 2,
+    name: 'Product 2', // Corrected the name for the second product
     price: 100,
     image: `${image}`,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel od',
   }
-]
-
-
-
+];
 
 const Home = () => {
+  const [favorites, setFavorites] = useState(() => {
+    const jsonValue = localStorage.getItem('favorites');
+    if (jsonValue !== null) return JSON.parse(jsonValue);
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const handleFavorite = (product) => {
+    setFavorites((prevFavorites) => [...prevFavorites, product]);
+    console.log(favorites);
+  };
+
   return (
     <>
       <div className="shop">
@@ -34,8 +46,8 @@ const Home = () => {
                 <p>{product.description}</p>
                 <p>{product.price}</p>
                 <div className="buttons">
-                <button>Add to cart</button>
-                <button>Mark as favorite</button>
+                  <button>Add to cart</button>
+                  <button onClick={() => handleFavorite(product)}>Mark as favorite</button>
                 </div>
               </div>
             </div>
@@ -43,7 +55,7 @@ const Home = () => {
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
