@@ -15,7 +15,7 @@ const Favorites = () => {
     localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
     window.location.reload(); // Refresh the page to update the displayed favorites
   };
-  
+
 
   console.log(favorites);
   return (
@@ -32,7 +32,7 @@ const Favorites = () => {
                 <p>{favorite.description}</p>
                 <p>{favorite.price}</p>
                 <div className="buttons">
-                  <button onClick={()=> removeFromFavorites(favorite.id)}>Remove from Favorites</button>
+                  <button onClick={() => removeFromFavorites(favorite.id)}>Remove from Favorites</button>
                 </div>
               </div>
             </div>

@@ -11,7 +11,7 @@ const products = [
   },
   {
     id: 2,
-    name: 'Product 2', // Corrected the name for the second product
+    name: 'Product 2', 
     price: 100,
     image: `${image}`,
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel od',
@@ -34,6 +34,20 @@ const Home = () => {
     console.log(favorites);
   };
 
+  //TODO Add cart functionality
+  const [cart, setCart] = useState(()=>{
+    const jsonValue = localStorage.getItem('cart');
+    if(jsonValue !== null) return JSON.parse(jsonValue);
+    return [];
+  });
+  useEffect(()=>{
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
+
+  const handleCart = (product) => {
+    setCart((prevCart) => [...prevCart, product]);
+    console.log(cart);
+  };
   return (
     <>
       <div className="shop">
@@ -46,7 +60,7 @@ const Home = () => {
                 <p>{product.description}</p>
                 <p>{product.price}</p>
                 <div className="buttons">
-                  <button>Add to cart</button>
+                  <button onClick={() => handleCart(product)} >Add to cart</button>
                   <button onClick={() => handleFavorite(product)}>Mark as favorite</button>
                 </div>
               </div>
