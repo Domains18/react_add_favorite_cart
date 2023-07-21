@@ -19,6 +19,8 @@ const products = [
 ];
 
 const Home = () => {
+  
+  //setfavorites
   const [favorites, setFavorites] = useState(() => {
     const jsonValue = localStorage.getItem('favorites');
     if (jsonValue !== null) return JSON.parse(jsonValue);
@@ -46,7 +48,7 @@ const Home = () => {
 
   const handleCart = (product) => {
     setCart((prevCart) => [...prevCart, product]);
-    console.log(cart);
+    // console.log(cart);
   };
   return (
     <>

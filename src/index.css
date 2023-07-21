@@ -109,3 +109,17 @@ button:hover{
     width: 200px;
     height: 200px;
 }
+/* favorites */
+.cart{
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+
+}
+.cart img{
+    width: 200px;
+    height: 200px;
+}
